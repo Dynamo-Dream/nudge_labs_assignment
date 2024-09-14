@@ -4,6 +4,7 @@ from transformers import (
     TextClassificationPipeline,
     pipeline
 )
+from summarizer import Summarizer
 import os
 import json
 from fastapi import FastAPI
@@ -59,6 +60,8 @@ def topic_boundaries(input):
 def get_title(boundary,input):
     model_name = "czearing/article-title-generator"
     pipe = pipeline("text2text-generation", model=model_name)
+    model = Summarizer()
+    
     output = []
     for i in range(len(boundary)-1):
         text = ""
@@ -67,6 +70,8 @@ def get_title(boundary,input):
         for j in range(boundary[i],boundary[i+1]):
             text += input[j]["text"]
             end_time+=input[j]["duration"]
+        if len(text)>512:
+            text =  model(text, min_length=60)
         title = pipe(text)
         output.append({"start":start_time,"end":end_time,"text":title[0]["generated_text"]})
     print("OUTPUT:--  ",output)
