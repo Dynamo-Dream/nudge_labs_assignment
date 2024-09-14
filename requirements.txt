@@ -7,3 +7,4 @@ pydantic
 tf-keras
 bert-extractive-summarizer
 uvicorn[standard]
+tensorflow[and-cuda]
