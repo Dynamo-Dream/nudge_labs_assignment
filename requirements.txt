@@ -1,0 +1,7 @@
+numpy 
+scikit-learn
+transformers
+torch
+fastapi
+pydantic
+tf-keras
