@@ -39,7 +39,7 @@ def topic_boundaries(input):
         label2id=label2id,
     )
     pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
-    boundary = []
+    boundary = [0,]
     for i in range(len(input)-1):
         pairs = [f"{input[i]['text']} [SEP] {input[i+1]['text']}"]
         result = pipe(pairs)
