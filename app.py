@@ -28,19 +28,15 @@ def compute_highlights(input:Input):
 
 def topic_boundaries(input):
     model_name = "BlueOrangeDigital/distilbert-cross-segment-document-chunking"
-    model_path = "/model"
     id2label = {0: "SAME", 1: "DIFFERENT"}
     label2id = {"SAME": 0, "DIFFERENT": 1}
 
-    if not os.path.exists(model_path):
-        os.makedirs(model_path)
-    tokenizer = DistilBertTokenizer.from_pretrained(model_name,cache_dir=model_path)
+    tokenizer = DistilBertTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(
         model_name,
         num_labels=2,
         id2label=id2label,
         label2id=label2id,
-        cache_dir=model_path
     )
     pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
     boundary = []
